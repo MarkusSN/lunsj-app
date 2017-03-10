@@ -47,7 +47,7 @@ app.post('/tine-lunsj', function (req, res) {
 			name: req.body.name,
 			order: req.body.order,
 			price: req.body.price,
-			timestamp: new Date()
+			timestamp: new Date().toLocaleDateString()
 		};
 		orders.push(map);
     io.emit('bestilling', JSON.stringify(map));
@@ -91,9 +91,9 @@ app.get('/tine-lunsj/menuItems', function (req, res) {
 
 app.get('/tine-lunsj/todayOrders', function (req, res) {
 	var ordersToday = [];
-	var today = new Date();
+	var todayTimestamp = new Date().toLocaleDateString();
 	for (var i = 0; i < orders.length; i++) {
-		if (orders[i].timestamp.getDate() == today.getDate()) {
+		if (orders[i].timestamp === todayTimestamp) {
 			ordersToday.push(orders[i]);
 		}
 	}
